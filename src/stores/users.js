@@ -15,7 +15,12 @@ export const useUserstore = defineStore("user", {
         namaBarang: "",
         harga: "",
         stok: "",
-        supplier: {},
+        supplier: {
+          id: "",
+          namaSupplier: "",
+          noTelp: "",
+          alamat: "",
+        },
       },
     };
   },
@@ -45,8 +50,9 @@ export const useUserstore = defineStore("user", {
           //   console.log(data.data.token);
           //   this.token = data.data.token;
           localStorage.setItem("token", data.data.token);
+          localStorage.setItem("profileName", data.data.profileName);
           console.log(localStorage.token);
-          //   router.push("/");
+          router.push("/");
         })
         .catch((err) => {
           console.log(err);
@@ -55,17 +61,54 @@ export const useUserstore = defineStore("user", {
 
     getBarang() {
       axios
-        .get("http://159.223.57.121:8090/barang/find-all?limit=10&offset=1", {
+        .get("http://159.223.57.121:8090/barang/find-all?limit=20&offset=1", {
           headers: {
             Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkaWxhIiwiZXhwIjoxNjc3MzA0NDQ1LCJpYXQiOjE2NzcyODY0NDV9.YUogbZFlXg1BunrgFB5wlOh-H09l0iC11nrov1TWeTgFJxh5L5Ck4N_0Cc--n-TbRX9UNatTmJ-wKFL_HAfgRQ",
           },
         })
         .then(({ data }) => {
-          console.log(data.data);
+          this.listProduct = data.data;
+          this.profileName = localStorage.profileName;
         })
         .catch((err) => {
           console.log(err);
         });
     },
+
+    getSupplier() {
+      axios
+        .get("http://159.223.57.121:8090/supplier/find-all?limit=20&offset=1", {
+          headers: {
+            Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkaWxhIiwiZXhwIjoxNjc3MzA0NDQ1LCJpYXQiOjE2NzcyODY0NDV9.YUogbZFlXg1BunrgFB5wlOh-H09l0iC11nrov1TWeTgFJxh5L5Ck4N_0Cc--n-TbRX9UNatTmJ-wKFL_HAfgRQ",
+          },
+        })
+        .then(({ data }) => {
+          this.listProduct = data.data.supplier;
+          this.profileName = localStorage.profileName;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    TambahBarang() {},
   },
 });
+
+// handleDeleteFavorite(id) {
+//   Axios({
+//     method: "delete",
+//     url: `/accomodation/favorites/${id}`,
+//     headers: {
+//       access_token: localStorage.getItem("access_token"),
+//     },
+//   })
+//     .then(({ data }) => {
+//       console.log(data);
+//       this.handleGetFavorites();
+//       toaster.info(`success delete favorite`);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// },
