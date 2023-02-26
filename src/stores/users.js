@@ -5,6 +5,8 @@ import router from "../router";
 export const useUserstore = defineStore("user", {
   state: () => {
     return {
+      token: "",
+      // token: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkaWxhIiwiZXhwIjoxNjc3NDA5NjQzLCJpYXQiOjE2NzczOTE2NDN9._Fj6rMOFTfV1yb51qwUBJfgmBHomRjBMRTIkpmksOC6powoETD4kfBHM1dBs2cLrkz7mGuLJlR5gTl4FN4qWRw",
       user: "",
       password: "",
       profileName: "",
@@ -57,7 +59,8 @@ export const useUserstore = defineStore("user", {
         })
         .then(({ data }) => {
           //   console.log(data.data.token);
-          //   this.token = data.data.token;
+          this.token = data.data.token;
+          console.log(this.token);
           localStorage.setItem("token", data.data.token);
           localStorage.setItem("profileName", data.data.profileName);
           console.log(localStorage.token);
@@ -72,7 +75,7 @@ export const useUserstore = defineStore("user", {
       axios
         .get("http://159.223.57.121:8090/barang/find-all?limit=20&offset=1", {
           headers: {
-            Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkaWxhIiwiZXhwIjoxNjc3MzQyMjg1LCJpYXQiOjE2NzczMjQyODV9.g2mcoMuu0V4XeHHeSvP4yl_tTkEowb8KJjur5VXdj46zC1XpQULjsDMLjFV5pvtmDlHa9vYYI5zn4CKjfp2Qow",
+            Authorization: `Bearer ${localStorage.token}`,
           },
         })
         .then(({ data }) => {
@@ -88,12 +91,30 @@ export const useUserstore = defineStore("user", {
       axios
         .get("http://159.223.57.121:8090/supplier/find-all?limit=20&offset=1", {
           headers: {
-            Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkaWxhIiwiZXhwIjoxNjc3MzA0NDQ1LCJpYXQiOjE2NzcyODY0NDV9.YUogbZFlXg1BunrgFB5wlOh-H09l0iC11nrov1TWeTgFJxh5L5Ck4N_0Cc--n-TbRX9UNatTmJ-wKFL_HAfgRQ",
+            Authorization: `Bearer ${localStorage.token}`,
           },
         })
         .then(({ data }) => {
           this.listProduct = data.data.supplier;
           this.profileName = localStorage.profileName;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    addSupplier() {
+      axios
+        .post("http://159.223.57.121:8090/supplier/create", {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+          namaSupplier: this.namaSupplier,
+          noTelp: this.noTelp,
+          alamat: this.alamat,
+        })
+        .then(({ data }) => {
+          console.log(data);
         })
         .catch((err) => {
           console.log(err);

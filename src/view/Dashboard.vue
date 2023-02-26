@@ -45,6 +45,7 @@
             <div class="flex justify-between">
               <h1 class="my-5 mx-3 font-medium text-black text-lg">Supplier</h1>
               <div class="flex">
+                <!-- <p>{{ listProduct }}</p> -->
                 <label for="modalsupplier" class="bg-blue-700 h-10 px-5 py-2 m-auto block rounded-md text-white cursor-pointer">Tambah Supplier</label>
                 <ModalSuppVue v-for="(product, i) in listProduct" :key="product.id" :product="product" :index="i" />
               </div>
@@ -84,6 +85,12 @@ export default {
     TableSuppVue,
     ModalSuppVue,
   },
+  data() {
+    return {
+      barang: "barang",
+      user: "user",
+    };
+  },
   computed: {
     ...mapState(useUserstore, ["listProduct", "profileName", "user"]),
   },
@@ -94,12 +101,6 @@ export default {
     this.getBarang();
     this.getSupplier();
     this.getUser();
-  },
-  data() {
-    return {
-      barang: "barang",
-      user: "user",
-    };
   },
 };
 </script>
