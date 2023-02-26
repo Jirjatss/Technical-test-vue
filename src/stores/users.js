@@ -6,23 +6,25 @@ export const useUserstore = defineStore("user", {
   state: () => {
     return {
       token: "",
-      // token: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkaWxhIiwiZXhwIjoxNjc3NDA5NjQzLCJpYXQiOjE2NzczOTE2NDN9._Fj6rMOFTfV1yb51qwUBJfgmBHomRjBMRTIkpmksOC6powoETD4kfBHM1dBs2cLrkz7mGuLJlR5gTl4FN4qWRw",
       user: "",
       password: "",
       profileName: "",
       username: "",
       token: "",
+      namaSupplier: "",
+      noTelp: "",
+      alamat: "",
       listProduct: {
         id: "",
         namaBarang: "",
         harga: "",
         stok: "",
-        supplier: {
-          id: "",
-          namaSupplier: "",
-          noTelp: "",
-          alamat: "",
-        },
+        // supplier: {
+        //   id: "",
+        //   namaSupplier: "",
+        //   noTelp: "",
+        //   alamat: "",
+        // },
       },
     };
   },
@@ -104,15 +106,18 @@ export const useUserstore = defineStore("user", {
     },
 
     addSupplier() {
-      axios
-        .post("http://159.223.57.121:8090/supplier/create", {
-          headers: {
-            Authorization: `Bearer ${this.token}`,
-          },
+      axios({
+        method: "post",
+        url: "/http://159.223.57.121:8090/supplier/create",
+        data: {
           namaSupplier: this.namaSupplier,
           noTelp: this.noTelp,
           alamat: this.alamat,
-        })
+        },
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      })
         .then(({ data }) => {
           console.log(data);
         })
