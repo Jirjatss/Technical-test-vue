@@ -127,21 +127,3 @@ export const useUserstore = defineStore("user", {
     },
   },
 });
-
-// handleDeleteFavorite(id) {
-//   Axios({
-//     method: "delete",
-//     url: `/accomodation/favorites/${id}`,
-//     headers: {
-//       access_token: localStorage.getItem("access_token"),
-//     },
-//   })
-//     .then(({ data }) => {
-//       console.log(data);
-//       this.handleGetFavorites();
-//       toaster.info(`success delete favorite`);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// },
