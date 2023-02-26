@@ -7,22 +7,44 @@
           <div class="grid grid-rows-3 space-y-2 px-2">
             <div class="shadow-2xl mt-3 rounded-lg mb-3">
               <img class="w-48" src="../assets/pp.png" alt="" />
-              <h1 class="bg-[#00a8e7] py-2 text-center text-black rounded-b-lg">{{ profileName }}</h1>
+              <h1 class="bg-[#00a8e7] py-2 text-center text-black rounded-b-lg">
+                {{ profileName }}
+              </h1>
             </div>
             <div class="shadow-2xl rounded-lg h-32">
-              <h1 class="bg-[#00a8e7] py-2 text-center text-black rounded-t-lg h-12">Menu</h1>
-              <div class="px-3 hover:bg-blue-300 text-black h-10"><h1 class="cursor-pointer" @click="barang = 'supplier'">Barang</h1></div>
-              <div class="px-3 hover:bg-blue-300 text-black h-10 rounded-b-lg"><h1 class="cursor-pointer" @click="barang = 'barang'">Supplier</h1></div>
+              <h1
+                class="bg-[#00a8e7] py-2 text-center text-black rounded-t-lg h-12"
+              >
+                Menu
+              </h1>
+              <div class="px-3 hover:bg-blue-300 text-black h-10">
+                <h1 class="cursor-pointer" @click="barang = 'supplier'">
+                  Barang
+                </h1>
+              </div>
+              <div class="px-3 hover:bg-blue-300 text-black h-10 rounded-b-lg">
+                <h1 class="cursor-pointer" @click="barang = 'barang'">
+                  Supplier
+                </h1>
+              </div>
             </div>
           </div>
         </div>
         <div class="mt-4 w-full mx-4 shadow">
-          <div class="bg-[#00a8e7] py-3 px-5 rounded-t-lg text-black font-medium text-xl">Dashboard</div>
+          <div
+            class="bg-[#00a8e7] py-3 px-5 rounded-t-lg text-black font-medium text-xl"
+          >
+            Dashboard
+          </div>
           <div v-if="barang === 'supplier'" class="px-4">
             <div class="flex justify-between">
               <h1 class="my-5 mx-3 font-medium text-black text-lg">Barang</h1>
               <div class="flex">
-                <button class="bg-blue-700 h-10 px-5 m-auto block rounded-md text-white">Tambah Barang</button>
+                <button
+                  class="bg-blue-700 h-10 px-5 m-auto block rounded-md text-white"
+                >
+                  Tambah Barang
+                </button>
               </div>
             </div>
             <table class="table-auto w-full border border-black">
@@ -38,15 +60,29 @@
                   <th class="border border-gray-400">Aksi</th>
                 </tr>
               </thead>
-              <TableVue v-for="(product, i) in listProduct" :key="product.id" :product="product" :index="i" />
+              <TableVue
+                v-for="(product, i) in listProduct"
+                :key="product.id"
+                :product="product"
+                :index="i"
+              />
             </table>
           </div>
           <div v-else-if="barang === 'barang'" class="px-4">
             <div class="flex justify-between">
               <h1 class="my-5 mx-3 font-medium text-black text-lg">Supplier</h1>
               <div class="flex">
-                <label for="modalsupplier" class="bg-blue-700 h-10 px-5 py-2 m-auto block rounded-md text-white cursor-pointer">Tambah Supplier</label>
-                <ModalSuppVue v-for="(product, i) in listProduct" :key="product.id" :product="product" :index="i" />
+                <label
+                  for="modalsupplier"
+                  class="bg-blue-700 h-10 px-5 py-2 m-auto block rounded-md text-white cursor-pointer"
+                  >Tambah Supplier</label
+                >
+                <ModalSuppVue
+                  v-for="(product, i) in listProduct"
+                  :key="product.id"
+                  :product="product"
+                  :index="i"
+                />
               </div>
             </div>
 
@@ -60,7 +96,12 @@
                   <th class="border border-gray-400">Aksi</th>
                 </tr>
               </thead>
-              <TableSuppVue v-for="(product, i) in listProduct" :key="product.id" :product="product" :index="i" />
+              <TableSuppVue
+                v-for="(product, i) in listProduct"
+                :key="product.id"
+                :product="product"
+                :index="i"
+              />
             </table>
           </div>
         </div>
@@ -84,6 +125,12 @@ export default {
     TableSuppVue,
     ModalSuppVue,
   },
+  data() {
+    return {
+      barang: "barang",
+      user: "user",
+    };
+  },
   computed: {
     ...mapState(useUserstore, ["listProduct", "profileName", "user"]),
   },
@@ -94,12 +141,6 @@ export default {
     this.getBarang();
     this.getSupplier();
     this.getUser();
-  },
-  data() {
-    return {
-      barang: "barang",
-      user: "user",
-    };
   },
 };
 </script>
