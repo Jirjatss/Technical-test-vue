@@ -6,6 +6,7 @@ export const useUserstore = defineStore("user", {
   state: () => {
     return {
       token: "",
+      // token: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkaWxhIiwiZXhwIjoxNjc3NDA5NjQzLCJpYXQiOjE2NzczOTE2NDN9._Fj6rMOFTfV1yb51qwUBJfgmBHomRjBMRTIkpmksOC6powoETD4kfBHM1dBs2cLrkz7mGuLJlR5gTl4FN4qWRw",
       user: "",
       password: "",
       profileName: "",
@@ -59,6 +60,7 @@ export const useUserstore = defineStore("user", {
         .then(({ data }) => {
           //   console.log(data.data.token);
           this.token = data.data.token;
+          console.log(this.token);
           localStorage.setItem("token", data.data.token);
           localStorage.setItem("profileName", data.data.profileName);
           console.log(localStorage.token);
@@ -95,6 +97,24 @@ export const useUserstore = defineStore("user", {
         .then(({ data }) => {
           this.listProduct = data.data.supplier;
           this.profileName = localStorage.profileName;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    addSupplier() {
+      axios
+        .post("http://159.223.57.121:8090/supplier/create", {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+          namaSupplier: this.namaSupplier,
+          noTelp: this.noTelp,
+          alamat: this.alamat,
+        })
+        .then(({ data }) => {
+          console.log(data);
         })
         .catch((err) => {
           console.log(err);
